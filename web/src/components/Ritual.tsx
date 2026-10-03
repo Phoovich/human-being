@@ -8,13 +8,17 @@ import { DecisionStep } from "./DecisionStep";
 import { Home } from "./Home";
 import { LayerStep } from "./LayerStep";
 import { Mirror } from "./Mirror";
+import { ActivityPicker } from "./ActivityPicker";
+import { DecisionFieldwork } from "./DecisionFieldwork";
 
 type Stage =
+  | { kind: "picker" }
   | { kind: "home" }
   | { kind: "decision" }
   | { kind: "breath" }
   | { kind: "layer"; index: number; order: string[] }
-  | { kind: "mirror"; readingId: string };
+  | { kind: "mirror"; readingId: string }
+  | { kind: "fieldwork" };
 
 /** The deeper the Reading goes, the darker and quieter the water. */
 const layerDepths = ["bg-shallow", "bg-deep", "bg-deeper"];
@@ -25,6 +29,8 @@ function depthOf(stage: Stage): string {
       return `${layerDepths[stage.index]} text-foam`;
     case "mirror":
       return "bg-night text-foam";
+    case "fieldwork":
+      return "bg-[#f3f7ed] text-[#173b2d]";
     default:
       return "bg-mist text-ink";
   }
@@ -32,7 +38,7 @@ function depthOf(stage: Stage): string {
 
 export function Ritual() {
   const readings = useReadings();
-  const [stage, setStage] = useState<Stage>({ kind: "home" });
+  const [stage, setStage] = useState<Stage>({ kind: "picker" });
   const [draft, setDraft] = useState<Reading | null>(null);
 
   function go(next: Stage) {
@@ -75,12 +81,19 @@ export function Ritual() {
 
   return (
     <main className={`flex flex-1 flex-col transition-colors duration-700 ${depthOf(stage)}`}>
+      {stage.kind === "picker" && (
+        <ActivityPicker
+          onOriginal={() => go({ kind: "home" })}
+          onFieldwork={() => go({ kind: "fieldwork" })}
+        />
+      )}
       {stage.kind === "home" && (
         <Home
           readings={readings}
           onStart={() => go({ kind: "decision" })}
           onOpen={(id) => go({ kind: "mirror", readingId: id })}
           onClear={clearReadings}
+          onActivities={() => go({ kind: "picker" })}
         />
       )}
       {stage.kind === "decision" && (
@@ -115,6 +128,7 @@ export function Ritual() {
             </button>
           </div>
         ))}
+      {stage.kind === "fieldwork" && <DecisionFieldwork onExit={() => go({ kind: "picker" })} />}
     </main>
   );
 }

@@ -7,8 +7,8 @@ import "@fontsource/noto-serif-thai/600.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ไพ่ส่องใจ",
-  description: "ไม่ทำนาย ไม่ตัดสิน แค่ถาม",
+  title: "Human Being · ไพ่ส่องใจ & เช็กให้ชัด",
+  description: "Two private activities for noticing what matters.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
