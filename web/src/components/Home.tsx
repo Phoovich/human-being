@@ -7,6 +7,7 @@ type Props = {
   onStart: () => void;
   onOpen: (id: string) => void;
   onClear: () => void;
+  onActivities: () => void;
 };
 
 const promises = [
@@ -20,12 +21,21 @@ const promises = [
 
 const dateFormat = new Intl.DateTimeFormat("th-TH", { dateStyle: "medium", timeStyle: "short" });
 
-export function Home({ readings, onStart, onOpen, onClear }: Props) {
+export function Home({ readings, onStart, onOpen, onClear, onActivities }: Props) {
   const [confirming, setConfirming] = useState(false);
 
   return (
     <div className="rise mx-auto w-full max-w-2xl px-6 py-14 sm:py-20">
-      <IcebergGauge className="h-20 w-14 text-ink/70" />
+      <div className="flex items-start justify-between gap-5">
+        <IcebergGauge className="h-20 w-14 text-ink/70" />
+        <button
+          type="button"
+          onClick={onActivities}
+          className="rounded-full border border-ink/15 px-4 py-2 text-sm text-ink/70 transition hover:border-ink/35 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
+        >
+          กิจกรรมทั้งหมด
+        </button>
+      </div>
       <h1 className="mt-6 font-serif text-5xl leading-tight sm:text-6xl">ไพ่ส่องใจ</h1>
       <p className="mt-3 font-serif text-xl text-ink/80 sm:text-2xl">ไม่ทำนาย ไม่ตัดสิน แค่ถาม</p>
 
