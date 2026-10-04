@@ -135,62 +135,64 @@ export function DecisionFieldwork({ onExit }: Props) {
   }
 
   return (
-    <div className="min-h-full bg-[#f3f7ed] text-[#173b2d]">
-      {stage === "home" && (
-        <DecisionFieldworkHome
-          briefs={briefs}
-          onStart={startNew}
-          onOpen={openBrief}
-          onClear={clearDecisionBriefs}
-          onExit={onExit}
-        />
-      )}
-      {stage === "setup" && <DecisionFieldworkSetup onBack={() => go("home")} onDone={startDecision} />}
-      {stage === "evidence" && draft && (
-        <DecisionFieldworkEvidence
-          key={draft.id}
-          options={draft.options}
-          evidence={draft.evidence}
-          onChange={(evidence) => updateDraft({ evidence })}
-          onBack={() => { setDraft(null); go("setup"); }}
-          onDone={() => go("focus")}
-        />
-      )}
-      {stage === "focus" && draft && (
-        <DecisionFieldworkFocus
-          key={draft.id}
-          options={draft.options}
-          evidence={draft.evidence}
-          initialFactor={draft.focusArea}
-          initialOptionId={draft.focusOptionId}
-          onBack={() => go("evidence")}
-          onDone={finishFocus}
-        />
-      )}
-      {stage === "method" && draft && draft.focusArea && draft.focusOptionId && (
-        <DecisionFieldworkMethod
-          key={`${draft.id}-${draft.focusArea}-${draft.focusOptionId}`}
-          factorId={draft.focusArea}
-          option={draft.options.find((item) => item.id === draft.focusOptionId) ?? draft.options[0]!}
-          method={draft.method}
-          source={draft.source}
-          question={draft.question}
-          nextAction={draft.nextAction}
-          changeMindCondition={draft.changeMindCondition}
-          revisitDate={draft.revisitDate}
-          onChange={updateDraft}
-          onBack={() => go("focus")}
-          onDone={finishBrief}
-        />
-      )}
-      {stage === "brief" && activeBrief && (
-        <DecisionFieldworkBrief
-          brief={activeBrief}
-          onChange={updateSavedBrief}
-          onAgain={startNew}
-          onHome={() => { setActiveBrief(null); go("home"); }}
-        />
-      )}
+    <div className="min-h-full bg-[#f3f7ed] text-[#173b2d] [background-image:radial-gradient(circle_at_85%_0%,rgb(210_228_209_/_0.55),transparent_28rem)]">
+      <div key={stage} className="fieldwork-stage">
+        {stage === "home" && (
+          <DecisionFieldworkHome
+            briefs={briefs}
+            onStart={startNew}
+            onOpen={openBrief}
+            onClear={clearDecisionBriefs}
+            onExit={onExit}
+          />
+        )}
+        {stage === "setup" && <DecisionFieldworkSetup onBack={() => go("home")} onDone={startDecision} />}
+        {stage === "evidence" && draft && (
+          <DecisionFieldworkEvidence
+            key={draft.id}
+            options={draft.options}
+            evidence={draft.evidence}
+            onChange={(evidence) => updateDraft({ evidence })}
+            onBack={() => { setDraft(null); go("setup"); }}
+            onDone={() => go("focus")}
+          />
+        )}
+        {stage === "focus" && draft && (
+          <DecisionFieldworkFocus
+            key={draft.id}
+            options={draft.options}
+            evidence={draft.evidence}
+            initialFactor={draft.focusArea}
+            initialOptionId={draft.focusOptionId}
+            onBack={() => go("evidence")}
+            onDone={finishFocus}
+          />
+        )}
+        {stage === "method" && draft && draft.focusArea && draft.focusOptionId && (
+          <DecisionFieldworkMethod
+            key={`${draft.id}-${draft.focusArea}-${draft.focusOptionId}`}
+            factorId={draft.focusArea}
+            option={draft.options.find((item) => item.id === draft.focusOptionId) ?? draft.options[0]!}
+            method={draft.method}
+            source={draft.source}
+            question={draft.question}
+            nextAction={draft.nextAction}
+            changeMindCondition={draft.changeMindCondition}
+            revisitDate={draft.revisitDate}
+            onChange={updateDraft}
+            onBack={() => go("focus")}
+            onDone={finishBrief}
+          />
+        )}
+        {stage === "brief" && activeBrief && (
+          <DecisionFieldworkBrief
+            brief={activeBrief}
+            onChange={updateSavedBrief}
+            onAgain={startNew}
+            onHome={() => { setActiveBrief(null); go("home"); }}
+          />
+        )}
+      </div>
     </div>
   );
 }

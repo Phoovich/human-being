@@ -15,12 +15,12 @@ export function DecisionFieldworkHome({ briefs, onStart, onOpen, onClear, onExit
   const [confirming, setConfirming] = useState(false);
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-5 py-8 sm:py-12">
-      <header className="flex items-center justify-between gap-4">
+    <div className="mx-auto w-full max-w-6xl px-5 py-8 sm:px-8 sm:py-12 lg:py-16">
+      <header className="fieldwork-reveal flex items-center justify-between gap-4">
         <button
           type="button"
           onClick={onExit}
-          className="inline-flex items-center gap-2 rounded-full border border-[#173b2d]/15 bg-white/45 px-4 py-2 text-sm font-semibold text-[#315b43] transition hover:border-[#173b2d]/35 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#173b2d]"
+          className="fieldwork-hover inline-flex items-center gap-2 rounded-full border border-[#173b2d]/15 bg-white/45 px-4 py-2 text-sm font-semibold text-[#315b43] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#173b2d]"
         >
           <span aria-hidden="true">←</span> กิจกรรมทั้งหมด
         </button>
@@ -28,12 +28,12 @@ export function DecisionFieldworkHome({ briefs, onStart, onOpen, onClear, onExit
       </header>
 
       <section className="mt-12 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-        <div className="rise">
+        <div className="fieldwork-reveal fieldwork-stagger-1">
           <div className="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.16em] text-[#52705d]">
-            <span className="grid h-8 w-8 place-items-center rounded-xl bg-[#d2e4d1] text-[#275139]">⌕</span>
-            Decision Fieldwork
+            <span className="fieldwork-mark grid h-9 w-9 place-items-center rounded-2xl border border-[#6f9276]/30 bg-[#d2e4d1] text-[#275139] shadow-sm" aria-hidden="true">✦</span>
+            เช็กข้อมูลก่อนตัดสินใจ
           </div>
-          <h1 className="mt-6 max-w-3xl font-serif text-5xl leading-[1.08] text-[#173b2d] sm:text-7xl">
+          <h1 className="mt-6 max-w-3xl font-serif text-5xl leading-[1.08] tracking-tight text-[#173b2d] sm:text-7xl">
             ก่อนเลือก ลองเช็กให้ชัด
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[#365846] sm:text-xl">
@@ -42,22 +42,22 @@ export function DecisionFieldworkHome({ briefs, onStart, onOpen, onClear, onExit
           <button
             type="button"
             onClick={onStart}
-            className="mt-8 rounded-full bg-[#173b2d] px-7 py-3.5 text-lg font-semibold text-[#f2f5e9] shadow-sm transition hover:bg-[#28553d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#173b2d]"
+            className="group mt-8 rounded-full bg-[#173b2d] px-7 py-3.5 text-lg font-semibold text-[#f2f5e9] shadow-sm transition hover:bg-[#28553d] hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#173b2d]"
           >
-            เริ่มเช็กการตัดสินใจ <span aria-hidden="true">→</span>
+            เริ่มเช็กการตัดสินใจ <span className="inline-block transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">→</span>
           </button>
           <p className="mt-4 text-sm text-[#52705d]">ใช้เวลาประมาณ 5–8 นาที · ไม่ให้คะแนน · ไม่เลือกแทนคุณ</p>
         </div>
 
-        <div className="rise rounded-[2rem] border border-[#6f9276]/20 bg-[#dcebd9]/70 p-6 sm:p-8" style={{ animationDelay: "120ms" }}>
+        <div className="fieldwork-reveal fieldwork-stagger-2 fieldwork-hover rounded-[2rem] border border-[#6f9276]/20 bg-[#dcebd9]/70 p-6 shadow-sm sm:p-8">
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#52705d]">ตอนจบคุณจะได้</p>
           <ol className="mt-5 space-y-5">
             {[
               ["01", "เห็นช่องว่าง", "แยกสิ่งที่รู้แล้ว สิ่งที่เดาอยู่ และสิ่งที่ยังไม่รู้"],
               ["02", "ได้คำถามที่ดีขึ้น", "รู้ว่าจะถามใคร ดูอะไร หรือทดลองอะไร"],
               ["03", "มีหนึ่งก้าวถัดไป", "กำหนดสิ่งที่จะทำและวันที่จะกลับมาทบทวน"],
-            ].map(([number, title, description]) => (
-              <li key={number} className="flex gap-4">
+            ].map(([number, title, description], index) => (
+              <li key={number} className="fieldwork-reveal flex gap-4" style={{ animationDelay: `${260 + index * 90}ms` }}>
                 <span className="font-mono text-sm text-[#6d9072]">{number}</span>
                 <span>
                   <strong className="font-semibold text-[#214b34]">{title}</strong>
@@ -73,7 +73,7 @@ export function DecisionFieldworkHome({ briefs, onStart, onOpen, onClear, onExit
       </section>
 
       {briefs.length > 0 && (
-        <section className="mt-20 border-t border-[#173b2d]/12 pt-8">
+        <section className="fieldwork-reveal fieldwork-stagger-3 mt-20 border-t border-[#173b2d]/12 pt-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#52705d]">บันทึกในเครื่องนี้</p>
@@ -101,7 +101,7 @@ export function DecisionFieldworkHome({ briefs, onStart, onOpen, onClear, onExit
                 type="button"
                 key={brief.id}
                 onClick={() => onOpen(brief)}
-                className="flex items-center justify-between gap-4 rounded-2xl border border-[#173b2d]/10 bg-white/55 px-5 py-4 text-left transition hover:border-[#173b2d]/30 hover:bg-white/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#173b2d]"
+                className="fieldwork-hover flex items-center justify-between gap-4 rounded-2xl border border-[#173b2d]/10 bg-white/55 px-5 py-4 text-left hover:border-[#173b2d]/30 hover:bg-white/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#173b2d]"
               >
                 <span className="min-w-0">
                   <strong className="block truncate font-semibold text-[#214b34]">{brief.decision}</strong>

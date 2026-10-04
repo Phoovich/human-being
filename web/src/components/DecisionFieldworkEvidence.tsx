@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FACTORS, statusLabel, type EvidenceMap, type EvidenceStatus, type FactorId, type FieldworkOption } from "@/lib/decisionFieldwork";
+import { FieldworkProgress } from "./FieldworkProgress";
 import { StepLabel } from "./DecisionFieldworkSetup";
 
 type Props = {
@@ -29,10 +30,11 @@ export function DecisionFieldworkEvidence({ options, evidence, onChange, onBack,
   return (
     <div className="mx-auto w-full max-w-5xl px-5 py-10 sm:py-16">
       <StepLabel>เช็กให้ชัด · 02 / 04</StepLabel>
-      <h1 className="mt-6 max-w-3xl font-serif text-4xl leading-tight text-[#173b2d] sm:text-6xl">ตอนนี้อะไรคือข้อมูลจริง อะไรคือการคาดเดา?</h1>
+      <FieldworkProgress current={2} />
+      <h1 className="max-w-3xl font-serif text-4xl leading-tight tracking-tight text-[#173b2d] sm:text-6xl">ตอนนี้อะไรคือข้อมูลจริง อะไรคือการคาดเดา?</h1>
       <p className="mt-5 max-w-3xl text-lg leading-relaxed text-[#52705d]">เลือกสถานะให้แต่ละเรื่อง ไม่ต้องเขียนทุกอย่างให้ครบ แค่ทำให้เห็นว่าตรงไหนยังต้องไปเช็กต่อ</p>
 
-      <div className="mt-9 flex flex-wrap gap-2" role="tablist" aria-label="ทางเลือก">
+      <div className="fieldwork-reveal fieldwork-stagger-1 mt-9 flex flex-wrap gap-2" role="tablist" aria-label="ทางเลือก">
         {options.map((option) => (
           <button
             type="button"
@@ -48,7 +50,7 @@ export function DecisionFieldworkEvidence({ options, evidence, onChange, onBack,
       </div>
 
       {activeOption && (
-        <section className="mt-5 rounded-3xl border border-[#173b2d]/10 bg-white/60 p-5 shadow-sm sm:p-7" role="tabpanel">
+        <section key={activeOption.id} className="fieldwork-reveal fieldwork-stagger-2 mt-5 rounded-3xl border border-[#173b2d]/10 bg-white/60 p-5 shadow-sm sm:p-7" role="tabpanel">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.15em] text-[#52705d]">กำลังดูข้อมูลของ</p>
@@ -58,10 +60,10 @@ export function DecisionFieldworkEvidence({ options, evidence, onChange, onBack,
           </div>
 
           <div className="mt-7 space-y-3">
-            {FACTORS.map((factor) => {
+            {FACTORS.map((factor, index) => {
               const current = evidence[activeOption.id]?.[factor.id] ?? "unknown";
               return (
-                <div key={factor.id} className="rounded-2xl border border-[#173b2d]/10 bg-[#f8faf5] p-4 sm:p-5">
+                <div key={factor.id} className="fieldwork-hover rounded-2xl border border-[#173b2d]/10 bg-[#f8faf5] p-4 sm:p-5" style={{ transitionDelay: `${index * 25}ms` }}>
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div className="max-w-xl">
                       <h3 className="font-semibold text-[#315b43]">{factor.label}</h3>
@@ -89,9 +91,9 @@ export function DecisionFieldworkEvidence({ options, evidence, onChange, onBack,
       )}
 
       <div className="mt-8 flex flex-wrap items-center justify-between gap-5">
-        <button type="button" onClick={onBack} className="text-[#52705d] underline underline-offset-4">กลับ</button>
-        <button type="button" onClick={onDone} className="rounded-full bg-[#173b2d] px-7 py-3.5 font-semibold text-[#f2f5e9] shadow-sm transition hover:bg-[#28553d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#173b2d]">
-          เลือกสิ่งที่ควรเช็กก่อน <span aria-hidden="true">→</span>
+        <button type="button" onClick={onBack} className="text-[#52705d] underline underline-offset-4 transition hover:text-[#173b2d]">กลับ</button>
+        <button type="button" onClick={onDone} className="group rounded-full bg-[#173b2d] px-7 py-3.5 font-semibold text-[#f2f5e9] shadow-sm transition hover:bg-[#28553d] hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#173b2d]">
+          เลือกสิ่งที่ควรเช็กก่อน <span className="inline-block transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">→</span>
         </button>
       </div>
     </div>

@@ -1,11 +1,12 @@
 import { useState, type ReactNode } from "react";
+import { FieldworkProgress } from "./FieldworkProgress";
 
 type Props = {
   onBack: () => void;
   onDone: (decision: string, options: string[]) => void;
 };
 
-const field = "w-full rounded-xl border border-[#173b2d]/15 bg-white/70 px-4 py-3 text-[#315b43] placeholder:text-[#6b836e]/60 focus:border-[#4e8660] focus:outline-none";
+const field = "fieldwork-input w-full rounded-xl border border-[#173b2d]/15 bg-white/70 px-4 py-3 text-[#315b43] placeholder:text-[#6b836e]/60 focus:border-[#4e8660] focus:outline-none";
 
 export function DecisionFieldworkSetup({ onBack, onDone }: Props) {
   const [decision, setDecision] = useState("");
@@ -22,7 +23,8 @@ export function DecisionFieldworkSetup({ onBack, onDone }: Props) {
       }}
     >
       <StepLabel>เช็กให้ชัด · 01 / 04</StepLabel>
-      <h1 className="mt-6 max-w-2xl font-serif text-4xl leading-tight text-[#173b2d] sm:text-6xl">ตอนนี้คุณกำลังตัดสินใจเรื่องอะไร?</h1>
+      <FieldworkProgress current={1} />
+      <h1 className="max-w-2xl font-serif text-4xl leading-tight tracking-tight text-[#173b2d] sm:text-6xl">ตอนนี้คุณกำลังตัดสินใจเรื่องอะไร?</h1>
       <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[#52705d]">เขียนเรื่องจริงหรือเรื่องที่กำลังจะต้องเลือก ไม่ต้องทำให้เป็นคำถามที่สมบูรณ์ก็ได้</p>
       <textarea
         autoFocus
@@ -33,7 +35,7 @@ export function DecisionFieldworkSetup({ onBack, onDone }: Props) {
         className={`${field} mt-7 resize-none text-lg`}
       />
 
-      <fieldset className="mt-10">
+      <fieldset className="fieldwork-reveal fieldwork-stagger-1 mt-10">
         <legend className="font-serif text-3xl text-[#173b2d]">ทางเลือกที่กำลังชั่งใจ</legend>
         <p className="mt-2 text-[#52705d]">ใส่ 2 ทางก่อน ถ้ามีทางที่สามค่อยเพิ่มได้</p>
         <div className="mt-5 space-y-3">
@@ -60,10 +62,10 @@ export function DecisionFieldworkSetup({ onBack, onDone }: Props) {
       </fieldset>
 
       <div className="mt-12 flex flex-wrap items-center gap-5">
-        <button type="submit" disabled={!ready} className="rounded-full bg-[#173b2d] px-7 py-3.5 font-semibold text-[#f2f5e9] shadow-sm transition hover:bg-[#28553d] disabled:cursor-not-allowed disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#173b2d]">
-          ดูสิ่งที่รู้และยังไม่รู้ <span aria-hidden="true">→</span>
+        <button type="submit" disabled={!ready} className="group rounded-full bg-[#173b2d] px-7 py-3.5 font-semibold text-[#f2f5e9] shadow-sm transition hover:bg-[#28553d] hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#173b2d]">
+          ดูสิ่งที่รู้และยังไม่รู้ <span className="inline-block transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">→</span>
         </button>
-        <button type="button" onClick={onBack} className="text-[#52705d] underline underline-offset-4">กลับ</button>
+        <button type="button" onClick={onBack} className="text-[#52705d] underline underline-offset-4 transition hover:text-[#173b2d]">กลับ</button>
       </div>
     </form>
   );

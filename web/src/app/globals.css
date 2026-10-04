@@ -53,6 +53,47 @@ body {
   animation: rise 700ms ease-out both;
 }
 
+.fieldwork-stage {
+  animation: fieldwork-stage-in 650ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.fieldwork-reveal {
+  animation: fieldwork-reveal 550ms ease-out both;
+}
+
+.fieldwork-stagger-1 {
+  animation-delay: 100ms;
+}
+
+.fieldwork-stagger-2 {
+  animation-delay: 180ms;
+}
+
+.fieldwork-stagger-3 {
+  animation-delay: 260ms;
+}
+
+.fieldwork-hover {
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background-color 220ms ease;
+}
+
+.fieldwork-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 38px rgb(23 59 45 / 0.09);
+}
+
+.fieldwork-mark {
+  animation: fieldwork-float 5s ease-in-out infinite;
+}
+
+.fieldwork-input {
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.fieldwork-input:focus {
+  box-shadow: 0 0 0 4px rgb(78 134 96 / 0.12);
+}
+
 @keyframes flip-in {
   from {
     transform: rotateY(180deg) translateY(12px);
@@ -73,9 +114,49 @@ body {
   }
 }
 
+@keyframes fieldwork-stage-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fieldwork-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(9px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fieldwork-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(2deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .card-flip,
-  .rise {
+  .rise,
+  .fieldwork-stage,
+  .fieldwork-reveal,
+  .fieldwork-mark {
     animation: none;
+  }
+
+  .fieldwork-hover,
+  .fieldwork-input {
+    transition: none;
   }
 }
